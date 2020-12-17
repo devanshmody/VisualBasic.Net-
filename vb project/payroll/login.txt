@@ -1,0 +1,32 @@
+Dim con As ADODB.Connection
+
+Dim rs As ADODB.Recordset
+Private Sub Form_Load()
+Set con = New ADODB.Connection
+con.ConnectionString = " Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\1180029&30\payroll.mdb;Persist Security Info=False"
+con.Open
+End Sub
+
+Private Sub cmdlogin_Click()
+Set rs = New ADODB.Recordset
+rs.Open "select * from logintbl", con, 1, 2
+While Not (rs.EOF)
+If (txtuname.Text = rs!uname) And (txtupaswd.Text = rs!upaswd) Then
+MsgBox ("login successful")
+rs.Close
+Unload Me
+form1.Show
+Exit Sub
+Else
+rs.MoveNext
+End If
+Wend
+rs.Close
+MsgBox ("login failed")
+End Sub
+Private Sub cmdcancel_Click()
+txtuname.Text = " "
+txtupaswd.Text = " "
+End Sub
+
+

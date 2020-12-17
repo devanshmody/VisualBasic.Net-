@@ -1,0 +1,30 @@
+Dim con As ADODB.Connection
+Dim rs As ADODB.Recordset
+
+
+
+Private Sub Cmdgo_Click()
+If (Check1.Value = 1 And Check2.Value = 0) Then
+Unload Me
+form2.Show
+End If
+
+If (Check2.Value = 1 And Check1.Value = 0) Then
+Unload Me
+form3.Show
+End If
+
+If (Check2.Value = 1 And Check1.Value = 1) Then
+MsgBox ("please select one item only")
+Check2.Value = 0
+Check1.Value = 0
+End If
+
+If (Check1.Value = 0 And Check2.Value = 0) Then
+MsgBox ("please select atleast one option")
+End If
+
+
+End Sub
+
+

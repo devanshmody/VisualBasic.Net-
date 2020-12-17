@@ -1,0 +1,4 @@
+Private Sub Cmdback_Click()
+Unload Me
+form1.Show
+End Sub

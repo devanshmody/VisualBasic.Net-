@@ -1,0 +1,43 @@
+
+Dim con As ADODB.Connection
+
+Dim rs As ADODB.Recordset
+
+Private Sub Form_Load()
+Set con = New ADODB.Connection
+Set rs = New ADODB.Recordset
+con.ConnectionString = " Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\1180029&30\student.mdb;Persist Security Info=False"
+con.Open
+rs.Open "select distinct studdept from studtbl", con, 1, 2
+While Not (rs.EOF)
+cmbdept.AddItem (rs!studdept)
+rs.MoveNext
+Wend
+rs.Close
+rs.Open "select distinct studyear from studtbl", con, 1, 2
+While Not (rs.EOF)
+cmbyear.AddItem (rs!studyear)
+rs.MoveNext
+Wend
+rs.Close
+End Sub
+
+
+Private Sub Cmdgo_Click()
+MSFlexGrid1.Rows = 1
+If (cmbdept.Text = "nill" And Val(cmbyear.Text) = 0) Then
+MsgBox ("please select any one option")
+ElseIf (cmbdept.Text = "nill" And Val(cmbyear.Text) <> 0) Then
+rs.Open " select * from studtbl where studyear=" & cmbyear.Text, con, 1, 2
+ElseIf (cmbdept.Text <> "nill" And Val(cmbyear.Text) = 0) Then
+rs.Open " select * from studtbl where studdept='" & cmbdept.Text & "'", con, 1, 2
+ElseIf (cmbdept.Text <> "nill" And Val(cmbyear.Text) <> 0) Then
+rs.Open " select * from studtbl where studyear= " & cmbyear.Text & " and studdept='" & cmbdept.Text & "'", con, 1, 2
+End If
+While Not (rs.EOF)
+MSFlexGrid1.AddItem (rs!studrollno & vbTab & rs!studname & vbTab & rs!studgender & vbTab & rs!studage & vbTab & rs!studcontactno & vbTab & rs!studdept & vbTab & rs!studyear)
+rs.MoveNext
+Wend
+rs.Close
+End Sub
+

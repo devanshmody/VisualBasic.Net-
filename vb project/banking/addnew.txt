@@ -1,0 +1,42 @@
+Dim con As ADODB.Connection
+
+Dim rs As ADODB.Recordset
+
+
+
+Private Sub Form_Load()
+Set con = New ADODB.Connection
+Set rs = New ADODB.Recordset
+con.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\1180029&30\banking.mdb;Persist Security Info=False"
+con.Open
+rs.Open "select * from custtbl", con, 1, 2
+rs.MoveLast
+Txtcustid.Text = (rs!customerid) + 1
+txtaccno.Text = (rs!accountno) + 1
+rs.Close
+Txtdop.Text = Format(Date, "dd-mm-yyyy")
+End Sub
+
+Private Sub cmdaddnew_Click()
+rs.Open "select * from custtbl", con, 1, 2
+rs.AddNew
+rs!customerid = Val(Txtcustid.Text)
+rs!accountno = Val(txtaccno.Text)
+rs!customername = (txtcustname.Text)
+rs!gender = (Txtcustgender.Text)
+rs!contactno = Val(Txtconno.Text)
+rs!dop = Val(Txtdop.Text)
+rs!customerage = Val(Txtcustage.Text)
+rs!balance = Val(Txtintdep.Text)
+rs.Update
+rs.Close
+
+End Sub
+
+Private Sub cmdexit_Click()
+Unload Me
+Form2.Show
+End Sub
+
+
+

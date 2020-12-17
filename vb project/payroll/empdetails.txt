@@ -1,0 +1,35 @@
+Dim con As ADODB.Connection
+Dim rs As ADODB.Recordset
+
+Private Sub cmbempid_Click()
+rs.Open "select * from emptbl where empid=" & cmbempid.Text, con, 1, 2
+Txtempname.Text = rs!empname
+Txtempgender.Text = rs!empgender
+Txtempage.Text = rs!empage
+Txtrph.Text = rs!rph
+Txtotrate.Text = rs!otrate
+rs.Close
+End Sub
+
+Private Sub Form_Load()
+Set con = New ADODB.Connection
+Set rs = New ADODB.Recordset
+con.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\1180029&30\payroll.mdb;Persist Security Info=False "
+con.Open
+rs.Open "select empid from emptbl", con, 1, 2
+While Not (rs.EOF)
+cmbempid.AddItem (rs!empid)
+rs.MoveNext
+Wend
+rs.Close
+End Sub
+Private Sub cmdcal_Click()
+Txtgrosssal.Text = Val(Txtrph.Text) * Val(Txtwkhrs.Text) + Val(Txtotrate.Text) * Val(Txtothrs.Text)
+Txttax.Text = Val(Txtgrosssal.Text) * 0.08
+txtnetsal.Text = Val(Txtgrosssal.Text) - Val(Txttax.Text)
+rs.Open "select * from emptbl where empid=" & cmbempid.Text, con, 1, 2
+rs!netsal = Val(txtnetsal.Text)
+rs.Update
+rs.Close
+End Sub
+

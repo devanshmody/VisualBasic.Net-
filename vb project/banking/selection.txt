@@ -1,0 +1,23 @@
+Dim con As ADODB.Connection
+
+Dim rs As ADODB.Recordset
+
+
+Private Sub cmdaddnew_Click()
+Unload Me
+Form4.Show
+End Sub
+
+Private Sub cmdcustdtls_Click()
+Unload Me
+Form3.Show
+End Sub
+
+Private Sub cmdexit_Click()
+Unload Me
+End Sub
+
+Private Sub cmdtransact_Click()
+Unload Me
+Form5.Show
+End Sub
